@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+  let str = "1-97,5-37,3-42,4-292,2-33,0-192";
+
+let assoc = {};
+str.split(",").forEach(item => {
+  let [key, value] = item.trim().split("-");
+  assoc[key] = parseInt(value);
+});
+
+console.log("Associative Array (Object):", assoc);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grocery List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f9f9f9;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      width: 400px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p {
+      text-align: center;
+      margin: 5px 0;
+    }
+    .input-area {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
+    }
+    input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px 0 0 8px;
+    }
+    button.add {
+      padding: 8px 12px;
+      border: none;
+      background: #333;
+      color: #fff;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fafafa;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #ddd;
+    }
+    .item-name {
+      font-weight: bold;
+    }
+    .controls button {
+      margin: 0 4px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .minus {
+      background: #ddd;
+    }
+    .plus {
+      background: #4CAF50;
+      color: white;
+    }
+    .delete {
+      background: #e74c3c;
+      color: white;
+    }
+    .tip {
+      font-size: 13px;
+      color: gray;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🛒 Grocery List</h2>
+    <p>Manage your shopping list with ease</p>
+    <p id="total">Total items to buy: 0</p>
+
+    <div class="input-area">
+      <input type="text" id="itemInput" placeholder="Enter grocery item...">
+      <button class="add" onclick="addItem()">+</button>
+    </div>
+
+    <ul id="list"></ul>
+
+    <p class="tip">Tip: Use the - and + buttons to adjust quantities, or the trash button to remove items</p>
+  </div>
+
+  <script>
+    let items = [];
+
+    function renderList() {
+      const list = document.getElementById("list");
+      list.innerHTML = "";
+      let total = 0;
+
+      items.forEach((item, index) => {
+        total += item.qty;
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span class="item-name">${item.name}</span>
+          <span>Qty: ${item.qty}</span>
+          <div class="controls">
+            <button class="minus" onclick="decreaseQty(${index})">-</button>
+            <button class="plus" onclick="increaseQty(${index})">+</button>
+            <button class="delete" onclick="deleteItem(${index})">🗑</button>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+
+      document.getElementById("total").textContent = "Total items to buy: " + total;
+    }
+
+    function addItem() {
+      const input = document.getElementById("itemInput");
+      const name = input.value.trim();
+
+      if (name !== "") {
+        const existing = items.find(item => item.name.toLowerCase() === name.toLowerCase());
+        if (existing) {
+          existing.qty++;
+        } else {
+          items.push({ name, qty: 1 });
+        }
+        input.value = "";
+        renderList();
+      }
+    }
+
+    function increaseQty(index) {
+      items[index].qty++;
+      renderList();
+    }
+
+    function decreaseQty(index) {
+      if (items[index].qty > 1) {
+        items[index].qty--;
+      } else {
+        items.splice(index, 1);
+      }
+      renderList();
+    }
+
+    function deleteItem(index) {
+      items.splice(index, 1);
+      renderList();
+    }
+  </script>
+</body>
+</html>

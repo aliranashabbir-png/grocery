@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+     
+    <script>
+    let i, j, k, c =5;
+    let shape = " ";
+
+    for (i = 1; i <= c; i++) {
+        for (j = 1; j <= c - i; j++) {
+            shape += "  "; 
+        }
+
+        for (k = 1; k <= 2 * i - 1; k++) {
+            shape += " * ";
+        }
+        shape += "\n";
+    }
+
+    console.log(shape);
+</script>
+<script>
+    console.log(  "  *  ") ;   
+    console.log (" * * *") ;
+
+</script>
+
+
+</body>
+</html>
